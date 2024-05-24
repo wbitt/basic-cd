@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: SITE_ID
+  labels:
+    app: SITE_ID
+spec:
+  selector:
+    matchLabels:
+      app: SITE_ID
+  template:
+    metadata:
+      labels:
+        app: SITE_ID
+    spec:
+      containers:
+      - name: helloworld
+        image: CONTAINER_REGISTRY_URL/CONTAINER_REGISTRY_USER/helloworld:IMAGE_TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: web
+        env:
+        - name: TZ
+          value: "Europe/Oslo"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: SITE_ID
+  labels:
+    app: SITE_ID
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: SITE_ID
+  type: ClusterIP
+
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: SITE_ID
+  annotations:
+    # Assuming you have Traefik v2
+    kubernetes.io/ingressClassName: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: SITE_NAME
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: SITE_ID
+                port:
+                  number: 80
