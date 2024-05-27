@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: helloworld
-        image: CONTAINER_REGISTRY_URL/CONTAINER_REGISTRY_USER/helloworld:IMAGE_TAG
+        image: CONTAINER_REGISTRY_URL/CONTAINER_REGISTRY_USERNAME/CONTAINER_IMAGE_NAME:IMAGE_TAG
         imagePullPolicy: Always
         ports:
         - containerPort: 80
