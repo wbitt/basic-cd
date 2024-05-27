@@ -34,8 +34,10 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          registry: ${{ env.CONTAINER_REGISTRY_URL }}
+          username: ${{ env.CONTAINER_REGISTRY_USERNAME }}
           push: true
-          tags: "${{ env.CONTAINER_REGISTRY_URL }}/${{ env.CONTAINER_REGISTRY_USERNAME }}/${{ env.CONTAINER_IMAGE_NAME }}:${GITHUB_SHA}"
+          tags: "${{ env.CONTAINER_REGISTRY_URL }}/${{ env.CONTAINER_REGISTRY_USERNAME }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ github.sha }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
