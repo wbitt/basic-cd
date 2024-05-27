@@ -68,7 +68,7 @@ jobs:
         run: |
           sed \
             -e s/CONTAINER_REGISTRY_URL/${{ env.CONTAINER_REGISTRY_URL }}/ \
-            -e s/CONTAINER_REGISTRY_USER/${{ env.CONTAINER_REGISTRY_USERNAME }}/ \
+            -e s/CONTAINER_REGISTRY_USERNAME/${{ env.CONTAINER_REGISTRY_USERNAME }}/ \
             -e s/CONTAINER_IMAGE_NAME/${{ env.CONTAINER_IMAGE_NAME }}/ \
             -e s/IMAGE_TAG/${{ github.sha }}/ \
             -e s/SITE_NAME/${{ env.SITE_NAME }}/ \
