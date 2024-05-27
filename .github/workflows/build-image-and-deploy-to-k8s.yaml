@@ -56,15 +56,13 @@ jobs:
       - name: show files
         run: |
          ls -lh 
-      - name: make directory
+      - name: make .kube directory
         run: mkdir ${HOME}/.kube
-      - name: create kubeconfig file
+      - name: create kubeconfig file from env variable
         run: |
-          echo "${{ secrets.KUBECONFIG_FILE }}" > ${HOME}/.kube/config
-          ls -lh ${HOME}/.kube/config
-
-
-      - name: replace variables with values in the template file
+          echo "${{ secrets.KUBECONFIG_FILE }}" | base64 -d > ${HOME}/.kube/config
+          ls -l ${HOME}/.kube/config
+      - name: replace variables with values using sed - in the template file
         run: |
           sed \
             -e s/CONTAINER_REGISTRY_URL/${{ env.CONTAINER_REGISTRY_URL }}/ \
@@ -76,9 +74,10 @@ jobs:
             ${DEPLOYMENT_TEMPLATE_FILE} > /tmp/dep-svc-ing.yaml
       - run: cat /tmp/dep-svc-ing.yaml
       - run: |
-          kubectl -n ${NAMESPACE} delete -f /tmp/dep-svc-ing.yaml || true
-          sleep 3
-          kubectl -n ${NAMESPACE} apply -f /tmp/dep-svc-ing.yaml
+          kubectl -n ${NAMESPACE} get pods
+          #~ kubectl -n ${NAMESPACE} delete -f /tmp/dep-svc-ing.yaml || true
+          #~ sleep 3
+          #~ kubectl -n ${NAMESPACE} apply -f /tmp/dep-svc-ing.yaml
 
 
 # Note: run: |    is for multiple independent lines, like a script.
