@@ -55,12 +55,14 @@ jobs:
         uses: actions/checkout@v4
       - name: show files
         run: |
-         ls -lh ${HOME}/.kube/config
-         ls -lh dep*.yaml
+         ls -lh 
       - name: make directory
         run: mkdir ${HOME}/.kube
       - name: create kubeconfig file
-        run: cat ${{ secrets.KUBECONFIG_FILE }} > ${HOME}/.kube/config
+        run: |
+          cat ${{ secrets.KUBECONFIG_FILE }} > ${HOME}/.kube/config
+          ls -lh ${HOME}/.kube/config
+
 
       - name: replace variables with values in the template file
         run: |
