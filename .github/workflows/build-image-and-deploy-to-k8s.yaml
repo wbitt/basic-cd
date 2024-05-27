@@ -51,14 +51,17 @@ jobs:
     container:
       image: wbitt/gcp-tools
     steps:
-      - name: make directory
-        run: mkdir ${HOME}/.kube
-      - name: create kubeconfig file
-        run: cat ${{ secrets.KUBECONFIG_FILE }} > ${HOME}/.kube/config
+      - name: checkout source code
+        uses: actions/checkout@v4
       - name: show files
         run: |
          ls -lh ${HOME}/.kube/config
          ls -lh dep*.yaml
+      - name: make directory
+        run: mkdir ${HOME}/.kube
+      - name: create kubeconfig file
+        run: cat ${{ secrets.KUBECONFIG_FILE }} > ${HOME}/.kube/config
+
       - name: replace variables with values in the template file
         run: |
           sed \
