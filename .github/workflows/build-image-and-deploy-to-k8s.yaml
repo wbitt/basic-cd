@@ -60,7 +60,7 @@ jobs:
         run: mkdir ${HOME}/.kube
       - name: create kubeconfig file
         run: |
-          echo ${{ secrets.KUBECONFIG_FILE }} > ${HOME}/.kube/config
+          echo "${{ secrets.KUBECONFIG_FILE }}" > ${HOME}/.kube/config
           ls -lh ${HOME}/.kube/config
 
 
