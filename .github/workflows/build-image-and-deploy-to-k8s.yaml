@@ -75,9 +75,11 @@ jobs:
       - run: cat /tmp/dep-svc-ing.yaml
       - run: |
           kubectl -n ${NAMESPACE} get pods
-          #~ kubectl -n ${NAMESPACE} delete -f /tmp/dep-svc-ing.yaml || true
-          #~ sleep 3
-          #~ kubectl -n ${NAMESPACE} apply -f /tmp/dep-svc-ing.yaml
+          kubectl -n ${NAMESPACE} delete -f /tmp/dep-svc-ing.yaml || true
+          sleep 3
+          kubectl -n ${NAMESPACE} apply -f /tmp/dep-svc-ing.yaml
+          sleep 3
+          kubectl -n ${NAMESPACE} get -f /tmp/dep-svc-ing.yaml
 
 
 # Note: run: |    is for multiple independent lines, like a script.
